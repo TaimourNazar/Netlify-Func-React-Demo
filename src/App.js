@@ -1,24 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  
+  const [val,setVal]=useState([]);
+
+  useEffect(()=>{
+    fetch(`/.netlify/functions/hello?name=from netlify serverless functions`)
+    .then(res=>res.json())
+    .then(obj=>setVal(obj));
+  },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Netlify Functions React App</h2>
+      <br/>
+      <h3>{val.message}</h3>
     </div>
   );
 }
